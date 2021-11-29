@@ -1,30 +1,33 @@
 import { StatusBar } from 'expo-status-bar';
-import { Navbar } from './components/Navbar.js';
+import { HomeScreen } from './components/HomeScreen.js';
+import { SettingsScreen } from './components/SettingsScreen.js';
 import { theme } from './style/theme.js';
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Provider as PaperProvider } from 'react-native-paper';
-import { StyleSheet, Text, View } from 'react-native';
+
+// ICONS: https://icons.expo.fyi/
+
+const Stack = createNativeStackNavigator();
+
+const navigatorOptions = {
+   headerShown: false,
+}
 
 export default function App() {
   return (
-    <NavigationContainer>
     <PaperProvider theme={theme}>
-      <View style={styles.container}>
-        <Navbar/>
-        <Text>App.js</Text>
-        <StatusBar style="auto" />
-      </View>
-    </PaperProvider>
+    <NavigationContainer>
+    <StatusBar style="auto" />
+
+      <Stack.Navigator screenOptions={navigatorOptions}>
+       <Stack.Screen name="Home" component={HomeScreen}/>
+       <Stack.Screen name="Settings" component={SettingsScreen}/>
+      </Stack.Navigator>
+
     </NavigationContainer>
+    </PaperProvider>
+    
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
