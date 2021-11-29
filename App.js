@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { Navbar } from './compoennts/Navbar.js';
+import { Navbar } from './components/Navbar.js';
 import { theme } from './style/theme.js';
 import React from 'react';
 import { Provider as PaperProvider } from 'react-native-paper';
