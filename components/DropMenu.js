@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useState, useEffect } from 'react';
 import DropDown from "react-native-paper-dropdown";
 
-export const DropMenu = ({label="", values=[], onSelect=() => {}}) => {
+export const DropMenu = ({label="", values=[], defaultValue=null, onSelect=() => {}}) => {
     const [showDropDown, setShowDropDown] = useState(false);
     const [selection, setSelection] = useState(null);
     useEffect(() => {
@@ -12,12 +12,12 @@ export const DropMenu = ({label="", values=[], onSelect=() => {}}) => {
     },[selection])
     return (
         <DropDown
-        label={label}
+        label={defaultValue&&!selection ? defaultValue : !defaultValue&&!selection ? label : null}
         mode={"outlined"}
         visible={showDropDown}
         showDropDown={() => setShowDropDown(true)}
         onDismiss={() => setShowDropDown(false)}
-        value={selection}
+        value={selection??defaultValue}
         setValue={setSelection}
         list={values}
     />
