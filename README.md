@@ -45,6 +45,7 @@ building.
 - GUI Library: ```yarn add react-native-paper``` or ```npm install react-native-paper```
 - App Navigation: ```npm install @react-navigation/native @react-navigation/native-stack```
 - App Navigation: ```expo install react-native-screens react-native-safe-area-context```
+- Dropdown Menu: ```yarn add react-native-paper-dropdown```
 
 ### Contribute
 - Create a branch for your changes
