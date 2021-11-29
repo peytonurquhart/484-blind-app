@@ -31,6 +31,8 @@ building.
 - Under "scripts" section, see command line scripts.
 - Under "dependencies", see required node modules for the project.
 #### 6. Open a Terminal in the Root Directory
+- GUI Elements: ```yarn add react-native-vector-icons```
+- GUI Library: ```yarn add react-native-paper``` or ```npm install react-native-paper```
 - Type ```yarn start``` to start with expo
 - If development server starts correctly and a browser tab opens, go to step 7. Keep tab open.
 - If errors, follow prompts in terminal, you may need to install additional node modules with npm or yarn. Check 'package.json' "dependencies" are installed in your environment.
