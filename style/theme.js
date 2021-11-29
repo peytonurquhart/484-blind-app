@@ -13,7 +13,7 @@ export const theme = {
     colors: {
       ...DefaultTheme.colors,
       primary: Pallete.GRAY_BLUE,
-      accent: DefaultTheme.colors.accent,
+      accent: Pallete.LIGHT_BLUE,
       background: DefaultTheme.colors.background,
       surface: DefaultTheme.colors.surface,
       accent: DefaultTheme.colors.accent,
