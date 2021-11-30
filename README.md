@@ -47,6 +47,8 @@ building.
 - App Navigation: ```expo install react-native-screens react-native-safe-area-context```
 - Dropdown Menu: ```yarn add react-native-paper-dropdown```
 - Menu Slider: ```yarn add @miblanchard/react-native-slider```
+- Redux Toolkit: ```yarn add @reduxjs/toolkit```
+- React Redux: ```yarn add react-redux```
 
 ### Contribute
 - Create a branch for your changes
