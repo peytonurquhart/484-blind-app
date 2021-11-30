@@ -5,20 +5,17 @@ import { HomeScreen } from './components/HomeScreen.js';
 import { NavigateScreen } from './components/NavigateScreen.js';
 import { EmergencyScreen } from './components/EmergencyScreen.js';
 import SettingsScreen from './components/SettingsScreen.js';
-import * as Settings from './redux/settingsReducer.js';
 import * as Route from './Routes.js';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { createStore } from 'redux';
 import { Provider as StateProvider } from 'react-redux';
 import { Provider as PaperProvider } from 'react-native-paper';
+import { store } from './redux/store.js';
 
 // ICONS: https://icons.expo.fyi/
 
-let Store = createStore(Settings.settingsReducer);
-
 // redux store debug updates \/
-// Store.subscribe(() => console.log(Store.getState()));
+// store.subscribe(() => console.log(store.getState()));
 
 const Stack = createNativeStackNavigator();
 
@@ -30,7 +27,7 @@ export default function App() {
     <PaperProvider theme={theme}>
     <NavigationContainer>
     <StatusBar style="auto" />
-    <StateProvider store={Store}>
+    <StateProvider store={store}>
 
       <Stack.Navigator screenOptions={navigatorOptions}>
        <Stack.Screen name={Route.HOME_SCREEN} component={HomeScreen}/>
