@@ -3,6 +3,7 @@ import { Appbar } from 'react-native-paper';
 import { StyleSheet } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import * as Route from '../Routes.js';
 
 // ICONS: https://icons.expo.fyi/
@@ -16,12 +17,16 @@ export const Navbar = ( {navigation} ) => {
         icon={({ size, color }) => ( <AntDesign name="home" size={size} color={color}/>)}/> 
 
       <Appbar.Action 
-        onPress={() => navigation.navigate(Route.SETTINGS_SCREEN)}
-        icon={({ size, color }) => ( <AntDesign name="setting" size={size} color={color}/>)}/> 
-
-      <Appbar.Action 
         onPress={() => navigation.navigate(Route.NAVIGATE_SCREEN)}
         icon={({ size, color }) => ( <Ionicons name="navigate-outline" size={size} color={color}/>)}/> 
+
+    <Appbar.Action 
+        onPress={() => navigation.navigate(Route.VOICE_COMMMAND)}
+        icon={({ size, color }) => ( <MaterialIcons name="record-voice-over" size={size} color={color} />)}/> 
+
+      <Appbar.Action 
+        onPress={() => navigation.navigate(Route.SETTINGS_SCREEN)}
+        icon={({ size, color }) => ( <AntDesign name="setting" size={size} color={color}/>)}/> 
 
       <Appbar.Action 
         onPress={() => navigation.navigate(Route.EMERGENCY_SCREEN)}

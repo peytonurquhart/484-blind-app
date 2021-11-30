@@ -49,7 +49,8 @@ building.
 - Menu Slider: ```yarn add @miblanchard/react-native-slider```
 - Redux Toolkit: ```yarn add @reduxjs/toolkit```
 - React Redux: ```yarn add react-redux```
-- Text to Speech ```expo install expo-speech```
+- Text to Speech: ```expo install expo-speech```
+- Voice Recording and Playback: ```expo install expo-av```
 
 ### Contribute
 - Create a branch for your changes

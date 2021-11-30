@@ -4,21 +4,21 @@ import { Button } from 'react-native-paper';
 import { theme } from '../style/theme.js';
 import * as Route from '../Routes.js';
 import { StyleSheet, Text, View } from 'react-native';
-import { playAudio } from '../util/audioAlert.js';
+import { playAudioFromText } from '../util/audioAlert.js';
 export const HomeScreen = ( {navigation} ) => {
     // on settings click
     const settingsOnPress = () => {
-        playAudio("settings");
+        playAudioFromText("settings");
         navigation.navigate(Route.SETTINGS_SCREEN);
     }
     // on navigation click
     const navigationOnPress = () => {
-        playAudio("navigate");
+        playAudioFromText("navigate");
         navigation.navigate(Route.NAVIGATE_SCREEN)
     }
     // on emergency click
     const emergencyOnPress = () => {
-        playAudio("emergency");
+        playAudioFromText("emergency");
         navigation.navigate(Route.EMERGENCY_SCREEN);
     }
     // get component which is a child of button with 'text'
