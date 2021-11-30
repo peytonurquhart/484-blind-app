@@ -1,6 +1,4 @@
-import React, {
-    Component
- } from 'react';
+import React from 'react';
 import { Navbar } from './Navbar.js';
 import { StyleSheet, SafeAreaView, ScrollView, StatusBar, Text} from 'react-native';
 import { theme } from '../style/theme.js';
@@ -22,7 +20,7 @@ const SettingsScreen = (props) => {
     const notificationTypes = [
         {
           label: "Vibration 1",
-          value: "vibraton1",
+          value: "vibration1",
         },
         {
           label: "Vibration 2",
@@ -33,9 +31,9 @@ const SettingsScreen = (props) => {
           value: "vibration3",
         },
         {
-            label: "Vibration 4",
-            value: "vibration4",
-          },
+          label: "Vibration 4",
+          value: "vibration4",
+        },
       ];
     return (
         <SafeAreaView style={styles.container}>
@@ -46,37 +44,46 @@ const SettingsScreen = (props) => {
             <MenuSpacer amount={MENU_SPACING*2}/>
 
             <Text> Emergency Contact Name </Text>
-            <MenuTextInput label={"Name"} defaultValue={getSettingState(Settings.EMER_CONTACT_NAME)} onChange={(value) => dispatchSetting(Settings.EMER_CONTACT_NAME, value)}/>
+            <MenuTextInput label={"Name"} defaultValue={getSettingState(Settings.EMER_CONTACT_NAME)} 
+                onChange={(value) => dispatchSetting(Settings.EMER_CONTACT_NAME, value)}/>
             <MenuSpacer amount={MENU_SPACING}/>
 
             <Text> Emergency Contact Phone Number </Text>
-            <MenuTextInput label={"Phone Number"} defaultValue={getSettingState(Settings.EMER_CONTACT_PHONE)} onChange={(value) => dispatchSetting(Settings.EMER_CONTACT_PHONE, value)}/>
+            <MenuTextInput label={"Phone Number"} defaultValue={getSettingState(Settings.EMER_CONTACT_PHONE)} 
+                onChange={(value) => dispatchSetting(Settings.EMER_CONTACT_PHONE, value)}/>
             <MenuSpacer amount={MENU_SPACING}/>
 
             <Text> Vibration Intensity </Text>
-            <MenuSlider min={1} max={5} defaultValue={getSettingState(Settings.VIBR_INTENSITY)} onChange={(value) => dispatchSetting(Settings.VIBR_INTENSITY, value)}/>
+            <MenuSlider min={1} max={5} defaultValue={getSettingState(Settings.VIBR_INTENSITY)} 
+                onChange={(value) => dispatchSetting(Settings.VIBR_INTENSITY, value)}/>
             <MenuSpacer amount={MENU_SPACING}/>     
 
             <Text> Staircase Vibration </Text>
-            <DropMenu label="Select" values={notificationTypes} defaultValue={getSettingState(Settings.STAIRS_VIBR)} onSelect={(sel) => dispatchSetting(Settings.STAIRS_VIBR, sel)}/>
+            <DropMenu label="Select" values={notificationTypes} defaultValue={getSettingState(Settings.STAIRS_VIBR)} 
+                onSelect={(sel) => dispatchSetting(Settings.STAIRS_VIBR, sel)}/>
             <MenuSpacer amount={MENU_SPACING}/>
 
             <Text> Open Door Vibration </Text>
-            <DropMenu label="Select" values={notificationTypes} defaultValue={getSettingState(Settings.OPEN_DOOR_VIBR)} onSelect={(sel) => dispatchSetting(Settings.OPEN_DOOR_VIBR, sel)}/>
+            <DropMenu label="Select" values={notificationTypes} defaultValue={getSettingState(Settings.OPEN_DOOR_VIBR)} 
+                onSelect={(sel) => dispatchSetting(Settings.OPEN_DOOR_VIBR, sel)}/>
             <MenuSpacer amount={MENU_SPACING}/>
 
             <Text> Closed Door Vibration </Text>
-            <DropMenu label="Select" values={notificationTypes} defaultValue={getSettingState(Settings.CLOSED_DOOR_VIBR)} onSelect={(sel) => dispatchSetting(Settings.CLOSED_DOOR_VIBR, sel)}/>
+            <DropMenu label="Select" values={notificationTypes} defaultValue={getSettingState(Settings.CLOSED_DOOR_VIBR)} 
+                onSelect={(sel) => dispatchSetting(Settings.CLOSED_DOOR_VIBR, sel)}/>
             <MenuSpacer amount={MENU_SPACING}/>
 
             <Text> Moving Object in Proximity Vibration </Text>
-            <DropMenu label="Select" values={notificationTypes} defaultValue={getSettingState(Settings.MOVING_OBJ_VIBR)} onSelect={(sel) => dispatchSetting(Settings.MOVING_OBJ_VIBR, sel)}/>
+            <DropMenu label="Select" values={notificationTypes} defaultValue={getSettingState(Settings.MOVING_OBJ_VIBR)} 
+                onSelect={(sel) => dispatchSetting(Settings.MOVING_OBJ_VIBR, sel)}/>
             <MenuSpacer amount={MENU_SPACING}/>
 
-            <MenuCheckbox description={"Call Emergency Contact"} defaultValue={getSettingState(Settings.DO_CALL_CONTACT, false)} onChange={(value) => dispatchSetting(Settings.DO_CALL_CONTACT, value)}/>
+            <MenuCheckbox description={"Call Emergency Contact"} defaultValue={getSettingState(Settings.DO_CALL_CONTACT, false)} 
+                onChange={(value) => dispatchSetting(Settings.DO_CALL_CONTACT, value)}/>
             <MenuSpacer amount={MENU_SPACING}/>
             
-            <MenuCheckbox description={"Call 911"} defaultValue={getSettingState(Settings.DO_CALL_911, false)} onChange={(value) => dispatchSetting(Settings.DO_CALL_911, value) } />
+            <MenuCheckbox description={"Call 911"} defaultValue={getSettingState(Settings.DO_CALL_911, false)} 
+                onChange={(value) => dispatchSetting(Settings.DO_CALL_911, value) } />
             <MenuSpacer amount={MENU_SPACING}/>
 
         <MenuSpacer amount={MENU_SPACING*4}/>
@@ -93,7 +100,7 @@ const styles = StyleSheet.create({
       backgroundColor: theme.colors.accent,
     },
     scrollView: {
-      backgroundColor: 'rgba(52, 52, 52, 0.4)',
+      backgroundColor: 'rgba(52, 52, 52, 0.5)',
       marginHorizontal: 20,
       paddingHorizontal: 20,
     },

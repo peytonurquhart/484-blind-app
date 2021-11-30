@@ -1,5 +1,3 @@
-import { createIconSetFromFontello } from "react-native-vector-icons";
-
 export const EMER_CONTACT_NAME = "emergencyContactName";
 export const EMER_CONTACT_PHONE = "emergencyContactNumber";
 export const VIBR_INTENSITY = "vibrationIntensity";
@@ -14,11 +12,11 @@ const initialState = {
     [EMER_CONTACT_NAME]: null,
     [EMER_CONTACT_PHONE]: null,
     [VIBR_INTENSITY]: 3,
-    [STAIRS_VIBR]: null,
-    [OPEN_DOOR_VIBR]: null,
-    [CLOSED_DOOR_VIBR]: null,
-    [MOVING_OBJ_VIBR]: null,
-    [DO_CALL_CONTACT]: false,
+    [STAIRS_VIBR]: "vibration1",
+    [OPEN_DOOR_VIBR]: "vibration2",
+    [CLOSED_DOOR_VIBR]: "vibration3",
+    [MOVING_OBJ_VIBR]: "vibration4",
+    [DO_CALL_CONTACT]: true,
     [DO_CALL_911]: false,
 }
 
@@ -43,7 +41,6 @@ export const settingsReducer = (state=initialState, action) => {
         case DO_CALL_911:
             return {...state, [DO_CALL_911]:action.value};
         default:
-            console.log("Error: settingsReducer");
             return state;      
     }
 }
