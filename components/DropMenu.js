@@ -12,7 +12,7 @@ export const DropMenu = ({label="", values=[], defaultValue=null, onSelect=() =>
     },[selection])
     return (
         <DropDown
-        label={defaultValue&&!selection ? defaultValue : !defaultValue&&!selection ? label : null}
+        label={!defaultValue&&!selection ? label : null}
         mode={"outlined"}
         visible={showDropDown}
         showDropDown={() => setShowDropDown(true)}
