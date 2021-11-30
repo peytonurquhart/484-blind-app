@@ -7,6 +7,7 @@ export const CLOSED_DOOR_VIBR = "closedDoorVibration";
 export const MOVING_OBJ_VIBR = "movingObjectVibration";
 export const DO_CALL_CONTACT = "callContact";
 export const DO_CALL_911 = "call911";
+export const DO_AUDIO_QUEUES = "audioQueues";
 
 const initialState = {
     [EMER_CONTACT_NAME]: null,
@@ -18,6 +19,7 @@ const initialState = {
     [MOVING_OBJ_VIBR]: "vibration4",
     [DO_CALL_CONTACT]: true,
     [DO_CALL_911]: false,
+    [DO_AUDIO_QUEUES]: true,
 }
 
 export const settingsReducer = (state=initialState, action) => {
@@ -40,6 +42,8 @@ export const settingsReducer = (state=initialState, action) => {
             return {...state, [DO_CALL_CONTACT]:action.value};
         case DO_CALL_911:
             return {...state, [DO_CALL_911]:action.value};
+        case DO_AUDIO_QUEUES:
+            return {...state, [DO_AUDIO_QUEUES]:action.value};
         default:
             return state;      
     }

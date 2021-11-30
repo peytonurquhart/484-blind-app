@@ -78,6 +78,10 @@ const SettingsScreen = (props) => {
                 onSelect={(sel) => dispatchSetting(Settings.MOVING_OBJ_VIBR, sel)}/>
             <MenuSpacer amount={MENU_SPACING}/>
 
+            <MenuCheckbox description={"Audio Feedback"} defaultValue={getSettingState(Settings.DO_AUDIO_QUEUES, false)} 
+                onChange={(value) => dispatchSetting(Settings.DO_AUDIO_QUEUES, value) } />
+            <MenuSpacer amount={MENU_SPACING}/>
+
             <MenuCheckbox description={"Call Emergency Contact"} defaultValue={getSettingState(Settings.DO_CALL_CONTACT, false)} 
                 onChange={(value) => dispatchSetting(Settings.DO_CALL_CONTACT, value)}/>
             <MenuSpacer amount={MENU_SPACING}/>
