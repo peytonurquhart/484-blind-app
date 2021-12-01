@@ -4,6 +4,7 @@ import { Button } from 'react-native-paper';
 import { Audio } from 'expo-av';
 import { theme } from '../style/theme.js';
 import { Navbar } from './Navbar.js';
+import { playAudioFromFile } from '../util/audioAlert.js';
 
 export default function VoiceCommandScreen({ navigation, onFinish = () => { } }) {
     const [recording, setRecording] = React.useState();
@@ -36,6 +37,7 @@ export default function VoiceCommandScreen({ navigation, onFinish = () => { } })
         await recording.stopAndUnloadAsync();
         const uri = recording.getURI();
         onFinish(uri);
+        playAudioFromFile(uri, true);
     }
 
     const buttonChild = (text) => {

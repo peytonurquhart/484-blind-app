@@ -5,7 +5,8 @@ import { theme } from '../style/theme.js';
 import * as Route from '../Routes.js';
 import { StyleSheet, Text, View } from 'react-native';
 import { playAudioFromText } from '../util/audioAlert.js';
-export const HomeScreen = ( {navigation} ) => {
+
+const HomeScreen = ( {navigation} ) => {
     // on settings click
     const settingsOnPress = () => {
         playAudioFromText("settings");
@@ -66,3 +67,5 @@ const styles = StyleSheet.create({
         width: '100%',
     },
 });
+
+export default HomeScreen;
