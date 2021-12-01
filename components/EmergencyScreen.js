@@ -79,8 +79,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     card: {
-        paddingVertical: '25%',
-        paddingHorizontal: '5%',
         backgroundColor: theme.colors.error,
         width: '80%',
         height: '40%',
@@ -88,7 +86,9 @@ const styles = StyleSheet.create({
         marginBottom: '10%',
     },
     content: {
-        flex: 1,
+        paddingVertical: '40%',
+        height: '100%',
+        width: '100%',
         alignItems: 'center',
     },
     buttonContent: {
