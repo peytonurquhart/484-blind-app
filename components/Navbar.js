@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Appbar } from 'react-native-paper';
 import { StyleSheet } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
@@ -60,7 +60,7 @@ export const Navbar = ( {navigation} ) => {
         onPress={() => navigation.navigate(Route.NAVIGATE_SCREEN)}
         icon={({ size, color }) => ( <Ionicons name="navigate-outline" size={size} color={color}/>)}/> 
 
-    <Appbar.Action 
+      <Appbar.Action 
         onPress={() => navigation.navigate(Route.VOICE_COMMMAND)}
         icon={({ size, color }) => ( <MaterialIcons name="record-voice-over" size={size} color={color} />)}/> 
 

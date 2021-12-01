@@ -17,7 +17,7 @@ export const theme = {
       background: DefaultTheme.colors.background,
       surface: DefaultTheme.colors.surface,
       accent: DefaultTheme.colors.accent,
-      error: DefaultTheme.colors.error,
+      error: Pallete.GRAPEFRUIT,
       text: DefaultTheme.colors.text,
       onSurface: DefaultTheme.colors.onSurface,
       disabled: DefaultTheme.colors.disabled,
