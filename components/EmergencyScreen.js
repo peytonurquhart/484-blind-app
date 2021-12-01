@@ -4,7 +4,6 @@ import { StyleSheet, Text, View } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { Card } from 'react-native-paper';
 import { connect } from "react-redux";
-import { Navbar } from './Navbar.js';
 import { playAudioFromText } from '../util/audioAlert.js';
 import { sleep } from '../util/sleep.js';
 import { theme } from '../style/theme.js';
@@ -35,7 +34,7 @@ const EmergencyScreen = (props) => {
     useCallback(() => {
         async function s(ms) {
             await (sleep(ms));
-            playAudioFromText(callDesc("."), false, true);
+            playAudioFromText(callDesc(".")+". touch screen to cancel.", false, true);
         }
         s(2000);
     })
@@ -66,7 +65,6 @@ const EmergencyScreen = (props) => {
                     <Text style={styles.cardContent}>{callDesc(callNumber)}</Text>
                 </Card.Content>
             </Card>
-            <Navbar navigation={props.navigation} />
         </View>
     )
 };

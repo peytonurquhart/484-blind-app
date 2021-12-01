@@ -2,7 +2,6 @@ import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Card } from 'react-native-paper';
-import { Navbar } from './Navbar.js';
 import { playAudioFromText } from '../util/audioAlert.js';
 import { sleep } from '../util/sleep.js';
 import { theme } from '../style/theme.js';
@@ -19,7 +18,7 @@ const EmergencyCountdownScreen = (props) => {
         await (sleep(ms));
         setTimer(timer - 1);
         Speech.isSpeakingAsync().then((status) => {
-            if (!status) { playAudioFromText("emergency! touch screen to cancel", false, true); }
+            if (!status) { playAudioFromText("emergency. touch screen to cancel.", false, true); }
         });
         }
         if (timer > 0) {
@@ -28,13 +27,11 @@ const EmergencyCountdownScreen = (props) => {
             setCountdownFinished(true);
         }
     }, [timer])
-
     useEffect(() => {
         if (coundownFinished) {
             props.navigation.navigate(Route.EMERGENCY_SCREEN);
         }
     }, [coundownFinished])
-
     const cardOnPress = () => {
         playAudioFromText("emergency cancelled", false, true);
         props.navigation.navigate(Route.HOME_SCREEN)
@@ -46,7 +43,6 @@ const EmergencyCountdownScreen = (props) => {
                     <Text style={styles.cardContent}>{timer}</Text>
                 </Card.Content>
             </Card>
-            <Navbar navigation={props.navigation} />
         </View>
     )
 };
