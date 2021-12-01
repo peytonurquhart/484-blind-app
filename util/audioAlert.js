@@ -9,7 +9,6 @@ export function playAudioFromText(str, forcePlay=false) {
         Speech.speak(str);
     }
 }
-
 export async function playAudioFromFile(uri, forcePlay = false) {
     let state = store.getState();
     if (!state[Settings.DO_AUDIO_QUEUES] && !forcePlay) {

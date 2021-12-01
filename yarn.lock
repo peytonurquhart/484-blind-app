@@ -2585,6 +2585,15 @@ expo-modules-core@~0.4.4, expo-modules-core@~0.4.7, expo-modules-core@~0.4.8:
     compare-versions "^3.4.0"
     invariant "^2.2.4"
 
+expo-sensors@~11.0.3:
+  version "11.0.3"
+  resolved "https://registry.yarnpkg.com/expo-sensors/-/expo-sensors-11.0.3.tgz#df40d8d08531fbe543c547f12468074d51da3666"
+  integrity sha512-VTwEpB98l+pb8nML/wDFhQ18LqZ8bBDchX6HaSLdLrrtp7eYOZZ2blOa2pM8VPZa/plOPKW4iMJ3MkmZnO1f3A==
+  dependencies:
+    "@expo/config-plugins" "^4.0.2"
+    expo-modules-core "~0.4.4"
+    invariant "^2.2.4"
+
 expo-speech@~10.0.3:
   version "10.0.3"
   resolved "https://registry.yarnpkg.com/expo-speech/-/expo-speech-10.0.3.tgz#27b721b7fadfc64c588b3396848413c40b1bae23"
