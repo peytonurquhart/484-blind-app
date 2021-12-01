@@ -4,6 +4,7 @@ import { StatusBar } from 'expo-status-bar';
 import HomeScreen from './components/HomeScreen.js';
 import { NavigateScreen } from './components/NavigateScreen.js';
 import EmergencyScreen from './components/EmergencyScreen.js';
+import EmergencyCountdownScreen from './components/EmergencyCountdownScreen.js';
 import VoiceCommandScreen from './components/VoiceCommandScreen.js';
 import SettingsScreen from './components/SettingsScreen.js';
 import * as Route from './Routes.js';
@@ -36,6 +37,7 @@ export default function App() {
        <Stack.Screen name={Route.SETTINGS_SCREEN} component={SettingsScreen}/>
        <Stack.Screen name={Route.NAVIGATE_SCREEN} component={NavigateScreen}/>
        <Stack.Screen name={Route.EMERGENCY_SCREEN} component={EmergencyScreen}/>
+       <Stack.Screen name={Route.EMERGENCY_COUNTDOWN} component={EmergencyCountdownScreen}/>
        <Stack.Screen name={Route.VOICE_COMMMAND} component={VoiceCommandScreen}/>
       </Stack.Navigator>
     </StateProvider>

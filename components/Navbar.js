@@ -34,7 +34,8 @@ export const Navbar = ( {navigation} ) => {
   }
   const onDropEventListnerUpdate = (status) => {
     if (status == MotionEvent.EVENT_ACTIVE) {
-      navigation.navigate(Route.EMERGENCY_SCREEN);
+      //navigation.navigate(Route.EMERGENCY_SCREEN);
+      navigation.navigate(Route.EMERGENCY_COUNTDOWN);
     }
   }
   useEffect(() => {

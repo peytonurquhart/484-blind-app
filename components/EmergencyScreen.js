@@ -63,7 +63,7 @@ const EmergencyScreen = (props) => {
         <View style={styles.container}>
             <Card style={styles.card} onPress={cardOnPress}>
                 <Card.Content style={styles.content}>
-                    <Text style={styles.buttonContent}>{callDesc(callNumber)}</Text>
+                    <Text style={styles.cardContent}>{callDesc(callNumber)}</Text>
                 </Card.Content>
             </Card>
             <Navbar navigation={props.navigation} />
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
         width: '100%',
         alignItems: 'center',
     },
-    buttonContent: {
+    cardContent: {
         flex: 1,
         textAlign: 'center',
         fontFamily: theme.fonts.medium.fontFamily,
