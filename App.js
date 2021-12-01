@@ -3,7 +3,7 @@ import { theme } from './style/theme.js';
 import { StatusBar } from 'expo-status-bar';
 import HomeScreen from './components/HomeScreen.js';
 import { NavigateScreen } from './components/NavigateScreen.js';
-import { EmergencyScreen } from './components/EmergencyScreen.js';
+import EmergencyScreen from './components/EmergencyScreen.js';
 import VoiceCommandScreen from './components/VoiceCommandScreen.js';
 import SettingsScreen from './components/SettingsScreen.js';
 import * as Route from './Routes.js';
