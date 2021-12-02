@@ -30,14 +30,9 @@ const EmergencyScreen = (props) => {
     const [callNumber, setCallNumber] = useState(getSettingState(Settings.EMER_CONTACT_PHONE, ""));
     const [call911, setCall911] = useState(getSettingState(Settings.DO_CALL_911, false));
     const [callDesc, setCallDesc] = useState(() => () => cantCallDesc());
+    const [focusReady, setFocusReady] = useState(false);
     useFocusEffect(
-    useCallback(() => {
-        async function s(ms) {
-            await (sleep(ms));
-            playAudioFromText(callDesc(".")+". touch screen to cancel.", false, true);
-        }
-        s(2000);
-    })
+        useCallback(() => { setFocusReady(true); })
     );
     useEffect(() => {
         setCallContact(getSettingState(Settings.DO_CALL_CONTACT, false));
@@ -54,6 +49,11 @@ const EmergencyScreen = (props) => {
         :
         setCallDesc(() => cantCallDesc)
     }, [callContact, callNumber, call911])
+    useEffect(() => {
+        if(focusReady) {
+            playAudioFromText(callDesc(".")+". touch screen to cancel.", false, true);
+        }
+    }, [callDesc])
     const cardOnPress = () => {
         playAudioFromText("emergency cancelled", false, true);
         props.navigation.navigate(Route.HOME_SCREEN)
