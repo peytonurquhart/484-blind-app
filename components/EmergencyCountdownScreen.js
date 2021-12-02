@@ -11,6 +11,8 @@ import * as Route from '../Routes.js';
 import * as Speech from 'expo-speech';
 
 const COUNTDOWN_SECONDS = 15;
+const COUNTDOWN_AUDIO = "emergency. touch screen to cancel.";
+const CANCELLED_AUDIO = "emergency cancelled"
 
 const EmergencyCountdownScreen = (props) => {
     const [coundownFinished, setCountdownFinished] = useState(false);
@@ -18,17 +20,17 @@ const EmergencyCountdownScreen = (props) => {
     const isFocused = useIsFocused();
     useEffect(() => {
         let isMounted = true;
-        async function s(ms) {
+        async function waitToSpeakAsync(ms, text) {
             await (sleep(ms));
             if (isMounted) {
-                setTimer(timer - 1);
-                Speech.isSpeakingAsync().then((status) => {
-                    if (!status) { playAudioFromText("emergency. touch screen to cancel.", false, true); }
-                });
+            setTimer(timer - 1);
+            Speech.isSpeakingAsync().then((status) => {
+                if (!status) { playAudioFromText(text, false, true); }
+            });
             }
         }
         if (timer > 0) {
-            s(1000);
+            waitToSpeakAsync(1000, COUNTDOWN_AUDIO);
         } else {
             setCountdownFinished(true);
         }
@@ -40,15 +42,15 @@ const EmergencyCountdownScreen = (props) => {
         }
     }, [coundownFinished])
     const cardOnPress = () => {
-        playAudioFromText("emergency cancelled", false, true);
+        playAudioFromText(CANCELLED_AUDIO, false, true);
         props.navigation.navigate(Route.HOME_SCREEN)
     }
     return (
         <View style={styles.container}>
             <Card style={styles.card} onPress={cardOnPress}>
-                <Card.Content style={styles.content}>
-                    <Text style={styles.cardContent}>{timer}</Text>
-                </Card.Content>
+            <Card.Content style={styles.content}>
+                <Text style={styles.cardContent}>{timer}</Text>
+            </Card.Content>
             </Card>
             <Navbar navigation={props.navigation} disabled={true}/>
         </View>

@@ -10,18 +10,23 @@ import { theme } from '../style/theme.js';
 import * as Settings from '../redux/settingsReducer.js';
 import * as Route from '../Routes.js';
 
-const callBothDesc = (number) => {
+const CANCELLED_AUDIO = "emergency cancelled";
+
+const POSTFIX_AUDIO = ". touch screen to cancel.";
+
+const CALL_BOTH_AUDIO = (number) => {
     return "Calling emergency contact: "+number+" If they do not answer, calling 911...";
 }
-const callContactDesc = (number) => {
+const CALL_CONTACT_AUDIO = (number) => {
     return "Calling emergency contact: "+number+"...";
 }
-const call911Desc = () => {
+const CALL_911_AUDIO = () => {
     return "Calling 911...";
 }
-const cantCallDesc = () => {
+const CANT_CALL_AUDIO = () => {
     return "Settings indicate that you would not like to contact anybody in case of emergency, or you did not specify an emergency contact number!";
 }
+
 const EmergencyScreen = (props) => {
     const getSettingState = (type, _default = null) => {
         return props.state[type] ?? _default;
@@ -29,7 +34,7 @@ const EmergencyScreen = (props) => {
     const [callContact, setCallContact] = useState(getSettingState(Settings.DO_CALL_CONTACT, false));
     const [callNumber, setCallNumber] = useState(getSettingState(Settings.EMER_CONTACT_PHONE, ""));
     const [call911, setCall911] = useState(getSettingState(Settings.DO_CALL_911, false));
-    const [callDesc, setCallDesc] = useState(() => () => cantCallDesc());
+    const [callDesc, setCallDesc] = useState(() => () => CANT_CALL_AUDIO());
     const [focusReady, setFocusReady] = useState(false);
     useFocusEffect(
         useCallback(() => { setFocusReady(true); })
@@ -41,29 +46,29 @@ const EmergencyScreen = (props) => {
     });
     useEffect(() => {
         callContact && call911 && callNumber != "" ?
-        setCallDesc(() => callBothDesc)
+        setCallDesc(() => CALL_BOTH_AUDIO)
         : callContact && callNumber != "" ?
-        setCallDesc(() => callContactDesc)
+        setCallDesc(() => CALL_CONTACT_AUDIO)
         : call911 ?
-        setCallDesc(() => call911Desc)
+        setCallDesc(() => CALL_911_AUDIO)
         :
-        setCallDesc(() => cantCallDesc)
+        setCallDesc(() => CANT_CALL_AUDIO)
     }, [callContact, callNumber, call911])
     useEffect(() => {
         if(focusReady) {
-            playAudioFromText(callDesc(".")+". touch screen to cancel.", false, true);
+            playAudioFromText(callDesc(".")+POSTFIX_AUDIO, false, true);
         }
     }, [callDesc])
     const cardOnPress = () => {
-        playAudioFromText("emergency cancelled", false, true);
+        playAudioFromText(CANCELLED_AUDIO, false, true);
         props.navigation.navigate(Route.HOME_SCREEN)
     }
     return (
         <View style={styles.container}>
             <Card style={styles.card} onPress={cardOnPress}>
-                <Card.Content style={styles.content}>
-                    <Text style={styles.cardContent}>{callDesc(callNumber)}</Text>
-                </Card.Content>
+            <Card.Content style={styles.content}>
+                <Text style={styles.cardContent}>{callDesc(callNumber)}</Text>
+            </Card.Content>
             </Card>
             <Navbar navigation={props.navigation} disabled={true}/>
         </View>
