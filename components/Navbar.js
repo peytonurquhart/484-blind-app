@@ -34,7 +34,6 @@ export const Navbar = ( {navigation} ) => {
   }
   const onDropEventListnerUpdate = (status) => {
     if (status == MotionEvent.EVENT_ACTIVE) {
-      //navigation.navigate(Route.EMERGENCY_SCREEN);
       navigation.navigate(Route.EMERGENCY_COUNTDOWN);
     }
   }
@@ -42,8 +41,6 @@ export const Navbar = ( {navigation} ) => {
       shakeEventListner.unsubscribe();
       dropEventListner.unsubscribe();
       async function s(ms){
-        // wait to subscribe to shake listner, just in case they dropped their phone
-        // we dont want to immediately detect a shake
         await (sleep(ms));
         shakeEventListner.subscribe(onShakeListnerUpdate);
       }

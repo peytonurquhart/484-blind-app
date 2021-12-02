@@ -19,6 +19,9 @@ import { store } from './redux/store.js';
 // redux store debug updates \/
 // store.subscribe(() => console.log(store.getState()));
 
+// clarify api color
+// https://medium.com/@danielsimandl/easy-object-detection-with-react-native-7c2e3f1b56a6
+
 const Stack = createNativeStackNavigator();
 
 const navigatorOptions = {
