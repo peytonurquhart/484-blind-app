@@ -1,10 +1,12 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { useIsFocused } from '@react-navigation/native';
 import { Card } from 'react-native-paper';
 import { playAudioFromText } from '../util/audioAlert.js';
 import { sleep } from '../util/sleep.js';
 import { theme } from '../style/theme.js';
+import { Navbar } from './Navbar.js';
 import * as Route from '../Routes.js';
 import * as Speech from 'expo-speech';
 
@@ -13,22 +15,27 @@ const COUNTDOWN_SECONDS = 15;
 const EmergencyCountdownScreen = (props) => {
     const [coundownFinished, setCountdownFinished] = useState(false);
     const [timer, setTimer] = useState(COUNTDOWN_SECONDS);
+    const isFocused = useIsFocused();
     useEffect(() => {
+        let isMounted = true;
         async function s(ms) {
-        await (sleep(ms));
-        setTimer(timer - 1);
-        Speech.isSpeakingAsync().then((status) => {
-            if (!status) { playAudioFromText("emergency. touch screen to cancel.", false, true); }
-        });
+            await (sleep(ms));
+            if (isMounted) {
+                setTimer(timer - 1);
+                Speech.isSpeakingAsync().then((status) => {
+                    if (!status) { playAudioFromText("emergency. touch screen to cancel.", false, true); }
+                });
+            }
         }
         if (timer > 0) {
             s(1000);
         } else {
             setCountdownFinished(true);
         }
+        return () => { isMounted = false };
     }, [timer])
     useEffect(() => {
-        if (coundownFinished) {
+        if (coundownFinished && isFocused) {
             props.navigation.navigate(Route.EMERGENCY_SCREEN);
         }
     }, [coundownFinished])
@@ -43,6 +50,7 @@ const EmergencyCountdownScreen = (props) => {
                     <Text style={styles.cardContent}>{timer}</Text>
                 </Card.Content>
             </Card>
+            <Navbar navigation={props.navigation} disabled={true}/>
         </View>
     )
 };

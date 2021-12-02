@@ -5,7 +5,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { Card } from 'react-native-paper';
 import { connect } from "react-redux";
 import { playAudioFromText } from '../util/audioAlert.js';
-import { sleep } from '../util/sleep.js';
+import { Navbar } from './Navbar.js';
 import { theme } from '../style/theme.js';
 import * as Settings from '../redux/settingsReducer.js';
 import * as Route from '../Routes.js';
@@ -65,6 +65,7 @@ const EmergencyScreen = (props) => {
                     <Text style={styles.cardContent}>{callDesc(callNumber)}</Text>
                 </Card.Content>
             </Card>
+            <Navbar navigation={props.navigation} disabled={true}/>
         </View>
     )
 };

@@ -25,7 +25,7 @@ const setMotionListner = () => {
 
 // ICONS: https://icons.expo.fyi/
 
-export const Navbar = ( {navigation} ) => {
+export const Navbar = ( {navigation, disabled=false} ) => {
 
   const onShakeListnerUpdate = (status) => {
     if (status == MotionEvent.EVENT_ACTIVE) {
@@ -47,30 +47,34 @@ export const Navbar = ( {navigation} ) => {
       dropEventListner.subscribe(onDropEventListnerUpdate);
       s(5000);
   })
-  return (
-    <Appbar style={styles.bottom}>
-
+  const appbarEnabled = () => {
+    return (
+      <Appbar style={styles.bottom}>
       <Appbar.Action 
         onPress={() => navigation.navigate(Route.HOME_SCREEN)} 
         icon={({ size, color }) => ( <AntDesign name="home" size={size} color={color}/>)}/> 
-
       <Appbar.Action 
         onPress={() => navigation.navigate(Route.NAVIGATE_SCREEN)}
         icon={({ size, color }) => ( <Ionicons name="navigate-outline" size={size} color={color}/>)}/> 
-
       <Appbar.Action 
         onPress={() => navigation.navigate(Route.VOICE_COMMMAND)}
         icon={({ size, color }) => ( <MaterialIcons name="record-voice-over" size={size} color={color} />)}/> 
-
       <Appbar.Action 
         onPress={() => navigation.navigate(Route.SETTINGS_SCREEN)}
         icon={({ size, color }) => ( <AntDesign name="setting" size={size} color={color}/>)}/> 
-
       <Appbar.Action 
         onPress={() => navigation.navigate(Route.EMERGENCY_SCREEN)}
         icon={({ size, color }) => ( <Ionicons name="md-warning-outline" size={size} color={color}/>)}/> 
-
     </Appbar>
+    )
+  }
+  const appbarDisabled = () => {
+    return (
+      <Appbar style={styles.bottom}/>
+    )
+  }
+  return (
+    disabled ? appbarDisabled() : appbarEnabled()
   )
 };
 
