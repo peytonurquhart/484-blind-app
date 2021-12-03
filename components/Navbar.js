@@ -8,43 +8,43 @@ import { MaterialIcons } from '@expo/vector-icons';
 import * as Route from '../Routes.js';
 import { DeviceMotion } from 'expo-sensors';
 import { sleep } from '../util/sleep.js';
-import * as MotionEvent from '../util/MotionListner.js';
+import * as MotionEvent from '../util/MotionListener.js';
 
 // Navbar is responsible for global app navigation, so it may also navigate on Motion Events in addition to clicks
 const UPDATE_INTERVAL_MS = 1000;
-const shakeEventListner = new MotionEvent.MotionListener(10, UPDATE_INTERVAL_MS, 1);
-const dropEventListner = new MotionEvent.MotionListener(7, UPDATE_INTERVAL_MS, 4);
+const shakeEventListener = new MotionEvent.MotionListener(10, UPDATE_INTERVAL_MS, 1);
+const dropEventListener = new MotionEvent.MotionListener(7, UPDATE_INTERVAL_MS, 4);
 
-DeviceMotion.isAvailableAsync().then(() => { setMotionListner() }, () => console.log("Warning: Device motion sensors not avaialble!"));
+DeviceMotion.isAvailableAsync().then(() => { setMotionListener() }, () => console.log("Warning: Device motion sensors not avaialble!"));
 DeviceMotion.setUpdateInterval(UPDATE_INTERVAL_MS);
-const setMotionListner = () => {
+const setMotionListener = () => {
   console.log("Success: Device motion sensors available.");
-  DeviceMotion.addListener(shakeEventListner.listner);
-  DeviceMotion.addListener(dropEventListner.listner);
+  DeviceMotion.addListener(shakeEventListener.listener);
+  DeviceMotion.addListener(dropEventListener.listener);
 }
 
 // ICONS: https://icons.expo.fyi/
 
 export const Navbar = ( {navigation, disabled=false} ) => {
 
-  const onShakeListnerUpdate = (status) => {
+  const onShakeUpdate = (status) => {
     if (status == MotionEvent.EVENT_ACTIVE) {
       navigation.navigate(Route.VOICE_COMMMAND);
     }
   }
-  const onDropEventListnerUpdate = (status) => {
+  const onDropUpdate = (status) => {
     if (status == MotionEvent.EVENT_ACTIVE) {
       navigation.navigate(Route.EMERGENCY_COUNTDOWN);
     }
   }
   useEffect(() => {
-      shakeEventListner.unsubscribe();
-      dropEventListner.unsubscribe();
+      shakeEventListener.unsubscribe();
+      dropEventListener.unsubscribe();
       async function s(ms){
         await (sleep(ms));
-        shakeEventListner.subscribe(onShakeListnerUpdate);
+        shakeEventListener.subscribe(onShakeUpdate);
       }
-      dropEventListner.subscribe(onDropEventListnerUpdate);
+      dropEventListener.subscribe(onDropUpdate);
       s(5000);
   })
   const appbarEnabled = () => {

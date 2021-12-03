@@ -20,7 +20,7 @@ export class MotionListener {
     subscribe = (f) => {
         this.subscriber = f;
     }
-    listner = (data) => {
+    listener = (data) => {
         let { x, y, z } = data.acceleration??{x: 0, y: 0, z: 0};
         const total = Math.sqrt(x * x + y * y + z * z);
         if(total > this.sensitivity) {

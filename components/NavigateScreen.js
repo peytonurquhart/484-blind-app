@@ -1,36 +1,49 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { StyleSheet, View, Text, Platform } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, View, Text } from 'react-native';
 import { theme } from '../style/theme.js';
 import { Card } from 'react-native-paper';
 import * as Location from 'expo-location';
+import { Magnetometer } from 'expo-sensors';
 import { Camera } from 'expo-camera';
 import { Navbar } from './Navbar.js';
 import { sleep } from '../util/sleep.js';
-import * as LocListner from '../util/LocationListner.js';
-import { NAVIGATE_SCREEN } from '../Routes.js';
+import * as Loc from '../util/LocationListener.js';
+import * as Compass from '../util/CompassListener.js';
 
 const UPDATE_INTERVAL_MS = 900;
+const COMPASS_UPDATE_INTERVAL_MS = 50;
 const FEET_PER_METER = 3.280839895;
 
 Location.requestForegroundPermissionsAsync().then(
     () => console.log("Success: Location permissions enabled!"), 
     () => console.log("Warning: Location permission denied!") 
 );
-const locationEventListner = new LocListner.LocationListener(
+const locationEventListner = new Loc.LocationListener(
     Location.getCurrentPositionAsync,
     { accuracy: Location.Accuracy.Highest },
     UPDATE_INTERVAL_MS,
 );
-const parseLocation = (loc) => {
+const compassEventListner = new Compass.CompassListener();
+Magnetometer.isAvailableAsync().then(
+    () => setCompassListner(),
+    () => console.log("Warning: Magnetometer sensor not avaialble!")
+);
+Magnetometer.setUpdateInterval(COMPASS_UPDATE_INTERVAL_MS);
+const setCompassListner = () => {
+    console.log("Success: Magnetometer available.");
+    Magnetometer.removeAllListeners();
+    Magnetometer.addListener(compassEventListner.listener);
+}
+const parseLocation = (loc, heading) => {
     if(!loc||!loc.coords) { return "Waiting for data..."; }
     let coords = loc.coords;
-    let s = "ALT:   " + (coords.altitude*FEET_PER_METER).toString().substring(0, 12) + " ft";
+    let s = "HEADING: " + heading;
+    s += "\nALT:   " + (coords.altitude*FEET_PER_METER).toString().substring(0, 12) + " ft";
     s += "\nLAT:   " + coords.latitude.toString().substring(0, 12) + " deg";
     s += "\nLON:   " + coords.longitude.toString().substring(0, 12) + " deg";
     s += "\nAccuracy:   " + (coords.accuracy*FEET_PER_METER).toString().substring(0, 5) + " ft";
     return s;
 }
-
 const NavigateChild = (props) => {
     const [cameraPermission, setCameraPermission] = useState(null);
     const [updatedLoc, setUpdatedLoc] = useState(false);
@@ -64,30 +77,36 @@ const NavigateChild = (props) => {
             <Camera style={styles.camera} type={Camera.Constants.Type.back}>
             <Card style={updatedLoc? {...styles.card, backgroundColor: 'rgba(0,128,0,0.5)'} : styles.card}>
             <Card.Content style={styles.content}>
-                <Text style={styles.cardContent}>{parseLocation(props.location)}</Text>
+                <Text style={styles.cardContent}>{parseLocation(props.location, props.heading)}</Text>
             </Card.Content>
             </Card>
             </Camera>
             <Navbar navigation={props.navigation} />
         </View>
-        : <View/>
+        : <View/> 
     );
 }
-
 const NavigateScreen = (props) => {
     const [location, setLocation] = useState(null);
+    const [heading, setHeading] = useState("...");
     useEffect(() => {
         locationEventListner.subscribe(onLocationUpdated, "parent");
-        return async () => locationEventListner.unsubscribe();
+        compassEventListner.subscribe(onCompassUpdated);
+        return async () => { 
+            compassEventListner.unsubscribe();
+            locationEventListner.unsubscribe();
+        }
     },[]);
+    const onCompassUpdated = (data) => {
+        setHeading(data.heading);
+    }
     const onLocationUpdated = (data) => {
         setLocation(data.data);
     }
     return (
-        <NavigateChild {...props} location={location}/>
+        <NavigateChild {...props} location={location} heading={heading}/>
     )
 } 
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -125,5 +144,4 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
 });
-
 export default NavigateScreen;
