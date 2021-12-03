@@ -16,30 +16,27 @@ export class LocationListener {
         this.updateInterval=updateInterval;
     }
     pollLocation = async () => {
-        return this.api(this.options).then(
-            (obj) => this.onUpdateEvent(obj), 
-            () => {"LocationListner: promise rejected."}
-        );
-    }
-    loopPollLocation = async () => {
         while(this.shouldLoop) {
             await sleep(this.updateInterval);
             let data = await this.api(this.options)
             this.onUpdateEvent(data);
-            this.pollLocation();
+            console.log(this.subID + ": polling location");
             await new Promise(resolve => setImmediate(resolve));
-            console.log("polled");
         }
-        console.log("LocationListner: Done polling.");
+        console.log(this.subID + ": LocationListner: unsubscribe() success");
     }
-    unsubscribe = () => {
+    unsubscribe = async () => {
         this.subscriber = null;
         this.shouldLoop = false;
+        return new Promise(resolve => setTimeout(resolve, this.updateInterval));
     }
-    subscribe = (f) => {
+    subscribe = async (f, id="") => {
+        await this.unsubscribe();
+        this.subID = id;
         this.subscriber = f;
         this.shouldLoop = true;
-        this.loopPollLocation();
+        console.log(this.subID + ": LocationListner: subscribe() success");
+        this.pollLocation();
     }
     onUpdateEvent(data) {
         this._notifySubscriber({type: EVENT_ACTIVE, data: data});

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, Platform } from 'react-native';
 import { theme } from '../style/theme.js';
 import { Card } from 'react-native-paper';
 import * as Location from 'expo-location';
@@ -7,9 +7,10 @@ import { Camera } from 'expo-camera';
 import { Navbar } from './Navbar.js';
 import { sleep } from '../util/sleep.js';
 import * as LocListner from '../util/LocationListner.js';
-import { useFocusEffect } from '@react-navigation/native';
+import { NAVIGATE_SCREEN } from '../Routes.js';
 
-const UPDATE_INTERVAL_MS = 500;
+const UPDATE_INTERVAL_MS = 900;
+const FEET_PER_METER = 3.280839895;
 
 Location.requestForegroundPermissionsAsync().then(
     () => console.log("Success: Location permissions enabled!"), 
@@ -20,25 +21,19 @@ const locationEventListner = new LocListner.LocationListener(
     { accuracy: Location.Accuracy.Highest },
     UPDATE_INTERVAL_MS,
 );
+const parseLocation = (loc) => {
+    if(!loc||!loc.coords) { return "Waiting for data..."; }
+    let coords = loc.coords;
+    let s = "ALT:   " + (coords.altitude*FEET_PER_METER).toString().substring(0, 12) + " ft";
+    s += "\nLAT:   " + coords.latitude.toString().substring(0, 12) + " deg";
+    s += "\nLON:   " + coords.longitude.toString().substring(0, 12) + " deg";
+    s += "\nAccuracy:   " + (coords.accuracy*FEET_PER_METER).toString().substring(0, 5) + " ft";
+    return s;
+}
 
-export const NavigateScreen = ({ navigation }) => {
+const NavigateChild = (props) => {
     const [cameraPermission, setCameraPermission] = useState(null);
-    const [locPermission, setLocPermission] = useState(true);
-    const [location, setLocation] = useState(null);
     const [updatedLoc, setUpdatedLoc] = useState(false);
-    const [subscribed, setSubscribed] = useState(false);
-
-    const onLocationUpdateEvent = (data) => {
-        setLocation(data.data);
-        setUpdatedLoc(true);
-    }
-    useEffect(() => {
-        if(!subscribed) {
-            locationEventListner.subscribe(onLocationUpdateEvent);
-            setSubscribed(true);
-            console.log("subbed");
-        }
-    })
     useEffect(() => {
         let isMounted = true;
         Camera.requestCameraPermissionsAsync().then((status) => {
@@ -48,49 +43,51 @@ export const NavigateScreen = ({ navigation }) => {
         return () => { isMounted = false };
     });
     useEffect(() => {
+        if(props.location) {
+            setUpdatedLoc(true);
+        }
+    }, [props.location]);
+    useEffect(() => {
         let isMounted = true;
         if(updatedLoc) {
-            async function resetAsync(ms) {
-                await sleep(ms);
-                if(isMounted) {
-                    setUpdatedLoc(false);
-                }
-            }
-            resetAsync(70);
+        async function resetAsync(ms) {
+            await sleep(ms);
+            if(isMounted) { setUpdatedLoc(false); }
         }
+        resetAsync(150);
+    }
         return () => { isMounted = false };
     }, [updatedLoc])
-
-    const parseLocation = (loc) => {
-        if(!loc.coords) { return "No Data"; }
-        let coords = loc.coords;
-        let s = "ALT: " + coords.altitude.toString().substring(0, 12);
-        s += "\nLAT: " + coords.latitude.toString().substring(0, 12);
-        s += "\nLON: " + coords.longitude.toString().substring(0, 12);
-        s += "\nAccuracy: " + coords.accuracy.toString().substring(0, 5);
-        return s;
-    }
-    let text = 'Waiting for Location...';
-    if (!locPermission) {
-        text = 'You must Enable Location Permission in Device Settings!';
-    } else if (location) {
-        text = parseLocation(location);
-    }
     return (
         cameraPermission ?
         <View style={styles.container}>
             <Camera style={styles.camera} type={Camera.Constants.Type.back}>
             <Card style={updatedLoc? {...styles.card, backgroundColor: 'rgba(0,128,0,0.5)'} : styles.card}>
             <Card.Content style={styles.content}>
-                <Text style={styles.cardContent}>{text}</Text>
+                <Text style={styles.cardContent}>{parseLocation(props.location)}</Text>
             </Card.Content>
             </Card>
             </Camera>
-            <Navbar navigation={navigation} />
+            <Navbar navigation={props.navigation} />
         </View>
         : <View/>
     );
 }
+
+const NavigateScreen = (props) => {
+    const [location, setLocation] = useState(null);
+    useEffect(() => {
+        locationEventListner.subscribe(onLocationUpdated, "parent");
+        return async () => locationEventListner.unsubscribe();
+    },[]);
+    const onLocationUpdated = (data) => {
+        setLocation(data.data);
+    }
+    return (
+        <NavigateChild {...props} location={location}/>
+    )
+} 
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -113,6 +110,7 @@ const styles = StyleSheet.create({
         height: '30%',
         marginTop: '10%',
         marginBottom: '10%',
+        
     },
     content: {
         paddingVertical: '5%',
@@ -122,8 +120,10 @@ const styles = StyleSheet.create({
     },
     cardContent: {
         flex: 1,
-        textAlign: 'center',
+        textAlign: 'left',
         fontFamily: theme.fonts.medium.fontFamily,
         fontWeight: 'bold',
     },
 });
+
+export default NavigateScreen;
