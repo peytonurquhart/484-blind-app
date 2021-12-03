@@ -1,4 +1,4 @@
-import { sleep } from '../util/sleep.js';
+import { sleep } from './sleep.js';
 
 /* 
     Unsub may not be working perfectly, ignored for time purpose.
@@ -20,7 +20,6 @@ export class LocationListener {
             await sleep(this.updateInterval);
             let data = await this.api(this.options)
             this.onUpdateEvent(data);
-            console.log(this.subID + ": polling location");
             await new Promise(resolve => setImmediate(resolve));
         }
         console.log(this.subID + ": LocationListner: unsubscribe() success");
