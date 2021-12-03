@@ -2,7 +2,7 @@ import React from 'react';
 import { theme } from './style/theme.js';
 import { StatusBar } from 'expo-status-bar';
 import HomeScreen from './components/HomeScreen.js';
-import { NavigateScreen } from './components/NavigateScreen.js';
+import NavigateScreen from './components/NavigateScreen.js';
 import EmergencyScreen from './components/EmergencyScreen.js';
 import EmergencyCountdownScreen from './components/EmergencyCountdownScreen.js';
 import VoiceCommandScreen from './components/VoiceCommandScreen.js';
