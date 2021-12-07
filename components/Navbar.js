@@ -34,7 +34,7 @@ export const Navbar = ( {navigation, disabled=false} ) => {
   }
   const onDropUpdate = (status) => {
     if (status == MotionEvent.EVENT_ACTIVE) {
-      navigation.navigate(Route.EMERGENCY_COUNTDOWN);
+      navigation.reset({ index: 0, routes: [{ name: Route.EMERGENCY_COUNTDOWN }] });
     }
   }
   useEffect(() => {
