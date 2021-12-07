@@ -1,9 +1,5 @@
 import { sleep } from './sleep.js';
 
-/* 
-    Unsub may not be working perfectly, ignored for time purpose.
-*/
-
 export const NO_EVENT = 0;
 export const EVENT_ACTIVE = 1;
 export class LocationListener {

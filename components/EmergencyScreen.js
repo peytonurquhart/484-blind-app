@@ -61,7 +61,7 @@ const EmergencyScreen = (props) => {
     }, [callDesc])
     const cardOnPress = () => {
         playAudioFromText(CANCELLED_AUDIO, false, true);
-        props.navigation.navigate(Route.HOME_SCREEN)
+        props.navigation.reset({ index: 0, routes: [{ name: Route.HOME_SCREEN}]});
     }
     return (
         <View style={styles.container}>

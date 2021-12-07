@@ -38,12 +38,12 @@ const EmergencyCountdownScreen = (props) => {
     }, [timer])
     useEffect(() => {
         if (coundownFinished && isFocused) {
-            props.navigation.navigate(Route.EMERGENCY_SCREEN);
+            props.navigation.reset({ index: 0, routes: [{ name: Route.EMERGENCY_SCREEN}]});
         }
     }, [coundownFinished])
     const cardOnPress = () => {
         playAudioFromText(CANCELLED_AUDIO, false, true);
-        props.navigation.navigate(Route.HOME_SCREEN)
+        props.navigation.reset({ index: 0, routes: [{ name: Route.HOME_SCREEN}]});
     }
     return (
         <View style={styles.container}>
