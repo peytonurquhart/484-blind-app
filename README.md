@@ -35,10 +35,16 @@ building.
 - Type: ```yarn start``` to start with expo
 - If development server starts correctly and a browser tab opens, go to step 7. Keep tab open.
 - If errors, follow prompts in terminal, you may need to install additional node modules with npm or yarn. Check 'package.json' "dependencies" are installed in your environment.
-#### 7. Start the Android Emulator you created in step 2.
+#### 7. Start the Android Emulator you created in step 2
 - Navigate to the browser tab which opened in step 6.
 - Select 'Run on Android device/emulator'
 - Wait for your android emulator to respond.
+#### 8. Run on Physical IOS/Android Device
+- Download the Expo GO app on your physical device.
+- In the expo browser tab from step 6 change link mode to 'tunnel'.
+- Wait for 'tunnel ready' in the console.
+- Keep Expo GO app CLOSED on your device. Use the device camera to scan the QR code in your browser. Then select 'open with Expo GO'
+- The app should now download and run on your device.
 
 ### Contribute
 - Create a branch for your changes
